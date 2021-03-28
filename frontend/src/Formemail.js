@@ -1,9 +1,9 @@
 // Render Prop
-import React , { useState, useEffect }   from 'react';
-import { useFormik , Formik, Field } from 'formik';
+import React , { useState }   from 'react';
+import { useFormik  } from 'formik';
 import api from './api/index.js';
 import * as yup from 'yup';
-import {Button , TextField , Grid , makeStyles , Paper , Select,  MenuItem  } from '@material-ui/core';
+import {Button , TextField  , makeStyles , Paper , Select,  MenuItem  } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import { CheckboxWithLabel } from 'formik-material-ui';
+// import { CheckboxWithLabel } from 'formik-material-ui';
 
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -38,7 +38,7 @@ const validationSchema = yup.object({
   interests: yup
   .string('Enter your interests')
   .required('interests is required'),
-  interests: yup
+  confirm: yup
   .string('confirm')
   .required('Confirm is required'),
 });
