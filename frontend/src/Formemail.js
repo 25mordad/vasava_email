@@ -18,20 +18,20 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const validationSchema = yup.object({
   firstname: yup
   .string('Enter your name')
-  .min(2, 'Name should be of minimum 2 characters length')
-  .required('Name is required'),
+  .min(2, 'El nombre debe tener una longitud mínima de 2 caracteres')
+  .required('Introduzca un nombre'),
   lastname: yup
   .string('Enter your lastname')
-  .min(2, 'lastname should be of minimum 2 characters length')
-  .required('Name is required'),
+  .min(2, 'El apellido debe tener un mínimo de 2 caracteres.')
+  .required('Introduzca un apellido'),
   email: yup
   .string('Enter your email')
-  .email('Enter a valid email')
-  .required('Email is required'),
+  .email('Introduzca un correo electrónico válido')
+  .required('Introduzca un correo electrónico válido'),
   phone: yup
   .string('Enter your phone')
-  .matches(phoneRegExp, 'Phone number is not valid')
-  .required('Phone is required'),
+  .matches(phoneRegExp, 'El número de teléfono no es válido')
+  .required('El número de teléfono no es válido'),
   salary: yup
   .string('Enter your salary')
   .required('salary is required'),
