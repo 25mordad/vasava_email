@@ -13,7 +13,13 @@ export const sendEmail = async (req,res) => {
       to: '25mordad@gmail.com', // Change to your recipient
       from: 'aalinoosh@gmail.com', // Change to your verified sender
       subject: 'Nueva Solicitud:  ' + firstname + ' ' + lastname,
-      html: 'Email: : '+  email + '<br/> ' + phone + '<br/> ' + salary + '<br/> ' + interests,
+      html:
+      '<strong>Nombre:</strong> '+  firstname + '<br/> '  +
+      '<strong>Apellidos:</strong> '+  lastname + '<br/> '  +
+      '<strong>Email:</strong> '+  email + '<br/> '  +
+      '<strong>Teléfono:</strong> '+ phone + '<br/> ' +
+      '<strong>Rango Salarial:</strong> '+ salary + '<br/> ' +
+      '<strong>Su interés y experiencia profesionales en:</strong> ' + interests,
     }
     sgMail
       .send(msg)

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Form from './Form';
+import Formemail from './Formemail';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Form />
+    <Formemail />
   </React.StrictMode>,
   document.getElementById('root')
 );

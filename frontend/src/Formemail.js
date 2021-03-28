@@ -1,9 +1,9 @@
 // Render Prop
-import React from 'react';
-import { useFormik  } from 'formik';
+import React , { useState, useEffect }   from 'react';
+import { useFormik , Formik, Field } from 'formik';
 import api from './api/index.js';
 import * as yup from 'yup';
-import {Button , TextField , Grid , makeStyles , Paper , Select,  MenuItem} from '@material-ui/core';
+import {Button , TextField , Grid , makeStyles , Paper , Select,  MenuItem  } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
+import { CheckboxWithLabel } from 'formik-material-ui';
 
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -37,6 +38,9 @@ const validationSchema = yup.object({
   interests: yup
   .string('Enter your interests')
   .required('interests is required'),
+  interests: yup
+  .string('confirm')
+  .required('Confirm is required'),
 });
 
 
@@ -52,11 +56,12 @@ const useStyles = makeStyles((theme) => ({
 
   form: {
     width: '90%',
-    marginTop: theme.spacing(1),
+    margin: theme.spacing(5),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  select: {
+    margin: theme.spacing(2),
   },
+
 }));
 
 
@@ -66,25 +71,31 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Form = () => {
+const Formemail = () => {
 
   const classes = useStyles();
+  const [formsubmit, setFormsubmit] = useState();
+
+
 
   const formik = useFormik({
     initialValues: {
       firstname: '',
       lastname: '',
-      email: 'foobar@example.com',
+      email: '',
       phone: '',
       salary: '',
       interests: '',
+      confirm: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       const sendData = async () => {
         const resp = await api(values);
         console.log(resp);
+        setFormsubmit("Gracias, el formulario ha sido enviado.");
+        formik.resetForm();
       }
       sendData();
     },
@@ -98,11 +109,16 @@ const Form = () => {
 
           <Paper className={classes.paper}>
 
-        <Typography component="h1" variant="h5">
-        Formulario de solicitud
-        </Typography>
-
-
+            <Box pt={3} >
+              <Typography component="h1" variant="h5">
+              Formulario de solicitud
+              </Typography>
+            </Box>
+            <Box  m={3} >
+              <Typography component="h5" variant="h5"  >
+                {formsubmit}
+              </Typography>
+            </Box>
             <form  className={classes.form}  onSubmit={formik.handleSubmit}>
               <TextField
 
@@ -156,7 +172,11 @@ const Form = () => {
                 error={formik.touched.phone && Boolean(formik.errors.phone)}
                 helperText={formik.touched.phone && formik.errors.phone}
               />
-
+              <Box pt={3} pb={1} >
+                <Typography component="p" variant="p">
+                Rango Salarial
+                </Typography>
+              </Box>
               <Select
                 variant="outlined"
                 margin="normal"
@@ -171,12 +191,16 @@ const Form = () => {
 
                 >
 
-                  <MenuItem value="1">less than 18K</MenuItem>
-                  <MenuItem value="2">between 18k and 35k</MenuItem>
-                  <MenuItem value="3">between 35k and 55k</MenuItem>
-                  <MenuItem value="4">more than 55k</MenuItem>
+                  <MenuItem value="Menos de 18K">Menos de 18K</MenuItem>
+                  <MenuItem value="Entre 18k y 35k">Entre 18k y 35k</MenuItem>
+                  <MenuItem value="Entre 35k y 55k">Entre 35k y 55k</MenuItem>
+                  <MenuItem value="Más de 55k">Más de 55k</MenuItem>
               </Select>
-
+              <Box pt={3} pb={1} >
+                <Typography component="p" variant="p"  >
+                Su interés y experiencia profesionales en
+                </Typography>
+              </Box>
               <Select
                 variant="outlined"
                 margin="normal"
@@ -190,25 +214,35 @@ const Form = () => {
                 error={formik.touched.interests && Boolean(formik.errors.interests)}
 
                 >
-
-                  <MenuItem value="Music">Music</MenuItem>
-                  <MenuItem value="Fashion">Fashion</MenuItem>
-                  <MenuItem value="Design">Design</MenuItem>
+                  <MenuItem value="Marketing">Marketing y comercio electrónico</MenuItem>
+                  <MenuItem value="Software">Software y datos</MenuItem>
+                  <MenuItem value="Internet">Internet y tecnología distribuida</MenuItem>
+                  <MenuItem value="Otros">Otros perfiles digitales</MenuItem>
               </Select>
 
 
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
 
-              <br/><br/><br/><br/><br/><br/><br/>
+
+
+              <Box m={2} >
+              <FormControlLabel
+                control={<Checkbox value={formik.values.confirm} color="primary" onChange={formik.handleChange}
+                error={formik.touched.confirm && Boolean(formik.errors.confirm)} />}
+                id="confirm"
+                name="confirm"
+              />
+                <Typography component="p" variant="p"  >
+                  Al registrarse, confirma que acepta los Términos y condiciones y la Política de privacidad
+                </Typography>
+              </Box>
+
+
               <Button color="primary" variant="contained" fullWidth type="submit">
                 Submit
               </Button>
             </form>
-          </Paper>
 
+          </Paper>
 
 
 
@@ -217,4 +251,4 @@ const Form = () => {
 </Container>
   );
 }
-export default Form;
+export default Formemail;
